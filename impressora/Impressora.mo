@@ -10,17 +10,15 @@ model Impressora
 
   model ImpressoraMotor
     Modelica.Blocks.Interfaces.RealInput orig annotation(
-      Placement(transformation(origin = {-122, 38}, extent = {{-20, -20}, {20, 20}}), transformation(origin = {-120, 44}, extent = {{-20, -20}, {20, 20}})));
+      Placement(transformation(origin = {-111, 33}, extent = {{-11, -11}, {11, 11}}), transformation(origin = {-120, 44}, extent = {{-20, -20}, {20, 20}})));
     Modelica.Blocks.Interfaces.RealInput dest annotation(
-      Placement(transformation(origin = {-122, -24}, extent = {{-20, -20}, {20, 20}}), transformation(origin = {-120, -52}, extent = {{-20, -20}, {20, 20}})));
-    Modelica.Blocks.Math.Add add(k1 = -1) annotation(
-      Placement(transformation(origin = {-78, 24}, extent = {{-10, -10}, {10, 10}})));
+      Placement(transformation(origin = {-111, -15}, extent = {{-11, -11}, {11, 11}}), transformation(origin = {-120, -52}, extent = {{-20, -20}, {20, 20}})));
+    Modelica.Blocks.Math.Add velocity(k1 = -1) annotation(
+      Placement(transformation(origin = {-74, 26}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Blocks.Continuous.Integrator posChange annotation(
-      Placement(transformation(origin = {-24, 54}, extent = {{-10, -10}, {10, 10}})));
+      Placement(transformation(origin = {-36, 52}, extent = {{-10, -10}, {10, 10}})));
     Modelica.Blocks.Logical.GreaterEqual greaterEqual annotation(
       Placement(transformation(origin = {4, 40}, extent = {{-10, -10}, {10, 10}})));
-    Modelica.Blocks.Math.Abs abs annotation(
-      Placement(transformation(origin = {-46, 24}, extent = {{-10, -10}, {10, 10}})));
     Modelica.Blocks.Logical.Switch switch1 annotation(
       Placement(transformation(origin = {50, 40}, extent = {{-10, -10}, {10, 10}})));
     Modelica.Blocks.Math.Add add1(k1 = +1) annotation(
@@ -30,22 +28,18 @@ model Impressora
     Modelica.Blocks.Logical.Not negate annotation(
       Placement(transformation(origin = {24, 40}, extent = {{-4, -4}, {4, 4}})));
   equation
-    connect(add.u1, orig) annotation(
-      Line(points = {{-90, 30}, {-102, 30}, {-102, 38}, {-122, 38}}, color = {0, 0, 127}));
-    connect(add.u2, dest) annotation(
-      Line(points = {{-90, 18}, {-90, -24}, {-122, -24}}, color = {0, 0, 127}));
+    connect(velocity.u1, orig) annotation(
+      Line(points = {{-86, 32}, {-103, 32}, {-103, 33}, {-111, 33}}, color = {0, 0, 127}));
+    connect(velocity.u2, dest) annotation(
+      Line(points = {{-86, 20}, {-86, -15}, {-111, -15}}, color = {0, 0, 127}));
     connect(greaterEqual.u1, posChange.y) annotation(
-      Line(points = {{-8, 40}, {-8, 44}, {-13, 44}, {-13, 54}}, color = {0, 0, 127}));
-    connect(abs.u, add.y) annotation(
-      Line(points = {{-58, 24}, {-67, 24}}, color = {0, 0, 127}));
-    connect(greaterEqual.u2, abs.y) annotation(
-      Line(points = {{-8, 32}, {-8, 36}, {-34, 36}, {-34, 24}}, color = {0, 0, 127}));
+      Line(points = {{-8, 40}, {-8, 44}, {-25, 44}, {-25, 52}}, color = {0, 0, 127}));
     connect(switch1.u1, posChange.y) annotation(
-      Line(points = {{38, 48}, {17, 48}, {17, 60}, {-9.5, 60}, {-9.5, 54}, {-13, 54}}, color = {0, 0, 127}));
+      Line(points = {{38, 48}, {17, 48}, {17, 60}, {-9.5, 60}, {-9.5, 52}, {-25, 52}}, color = {0, 0, 127}));
     connect(add1.u1, switch1.y) annotation(
       Line(points = {{72, 18}, {66, 18}, {66, 40}, {61, 40}}, color = {0, 0, 127}));
     connect(add1.u2, orig) annotation(
-      Line(points = {{72, 6}, {46, 6}, {46, -32}, {-50, -32}, {-50, -4}, {-96, -4}, {-96, 38}, {-122, 38}}, color = {0, 0, 127}));
+      Line(points = {{72, 6}, {46, 6}, {46, -32}, {-50, -32}, {-50, -4}, {-96, -4}, {-96, 33}, {-111, 33}}, color = {0, 0, 127}));
     connect(add1.y, motorPos) annotation(
       Line(points = {{95, 12}, {110, 12}}, color = {0, 0, 127}));
     connect(negate.u, greaterEqual.y) annotation(
@@ -53,9 +47,11 @@ model Impressora
     connect(switch1.u2, negate.y) annotation(
       Line(points = {{38, 40}, {28, 40}}, color = {255, 0, 255}));
     connect(switch1.u3, dest) annotation(
-      Line(points = {{38, 32}, {26, 32}, {26, -24}, {-122, -24}}, color = {0, 0, 127}));
-  connect(posChange.u, abs.y) annotation(
-      Line(points = {{-36, 54}, {-36, 39}, {-34, 39}, {-34, 24}}, color = {0, 0, 127}));
+      Line(points = {{38, 32}, {26, 32}, {26, -15}, {-111, -15}}, color = {0, 0, 127}));
+  connect(posChange.u, velocity.y) annotation(
+      Line(points = {{-48, 52}, {-63, 52}, {-63, 26}}, color = {0, 0, 127}));
+  connect(greaterEqual.u2, velocity.y) annotation(
+      Line(points = {{-8, 32}, {-63, 32}, {-63, 26}}, color = {0, 0, 127}));
     annotation(
       Diagram);
   end ImpressoraMotor;
