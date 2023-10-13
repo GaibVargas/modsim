@@ -6,7 +6,7 @@ model Impressora2D
     Modelica.Blocks.Interfaces.RealInput orig annotation(
       Placement(transformation(origin = {-120, 64}, extent = {{-20, -20}, {20, 20}}), transformation(origin = {-120, 68}, extent = {{-20, -20}, {20, 20}})));
     Modelica.Blocks.Interfaces.RealInput dest annotation(
-      Placement(transformation(origin = {-120, -2}, extent = {{-20, -20}, {20, 20}}), transformation(origin = {-120, -36}, extent = {{-20, -20}, {20, 20}})));
+      Placement(transformation(origin = {-120, -30}, extent = {{-20, -20}, {20, 20}}), transformation(origin = {-120, -36}, extent = {{-20, -20}, {20, 20}})));
   Modelica.Blocks.Math.Add dist(k1 = -1)  annotation(
       Placement(transformation(origin = {-51, 9}, extent = {{-5, -5}, {5, 5}})));
   Modelica.Blocks.Sources.RealExpression time_to_full_speed(y = maxSpeed/acceleration.y)  annotation(
@@ -20,7 +20,7 @@ model Impressora2D
   Modelica.Blocks.Continuous.LimIntegrator velocity(outMax = maxSpeed, outMin = -maxSpeed)  annotation(
       Placement(transformation(origin = {-1, 41}, extent = {{-7, -7}, {7, 7}})));
   Modelica.Blocks.Logical.Switch brake annotation(
-      Placement(transformation(origin = {-46, 52}, extent = {{-6, -6}, {6, 6}})));
+      Placement(transformation(origin = {-48, 52}, extent = {{-6, -6}, {6, 6}})));
   Modelica.Blocks.Sources.RealExpression neg_acceleration(y = -0.3)  annotation(
       Placement(transformation(origin = {-75, 71}, extent = {{-9, -9}, {9, 9}})));
   Modelica.Blocks.Sources.BooleanExpression brakeCondition(y = (dist_int_const.y < 0 and abs(pos_change.y)  >= abs((dist.y/2))) or (crt_dist.y + dist_to_full_speed.y > dest))  annotation(
@@ -41,9 +41,9 @@ model Impressora2D
     connect(dist.u1, orig) annotation(
       Line(points = {{-57, 12}, {-57, 64}, {-120, 64}}, color = {0, 0, 127}));
     connect(dist.u2, dest) annotation(
-      Line(points = {{-57, 6}, {-57, -2}, {-120, -2}}, color = {0, 0, 127}));
+      Line(points = {{-57, 6}, {-57, 1.5}, {-65, 1.5}, {-65, -30}, {-120, -30}}, color = {0, 0, 127}));
     connect(brake.u2, brakeCondition.y) annotation(
-      Line(points = {{-54, 52}, {-76, 52}}, color = {255, 0, 255}));
+      Line(points = {{-55, 52}, {-76, 52}}, color = {255, 0, 255}));
     connect(stop.u2, stopCond.y) annotation(
       Line(points = {{-31, 43}, {-43, 43}, {-43, 38}}, color = {255, 0, 255}));
     connect(velocity.u, stop.y) annotation(
@@ -57,19 +57,19 @@ model Impressora2D
   connect(pos, crt_dist.y) annotation(
       Line(points = {{110, 12}, {60, 12}, {60, 4}}, color = {0, 0, 127}));
   connect(brake.u1, neg_acceleration.y) annotation(
-      Line(points = {{-54, 56}, {-66, 56}, {-66, 72}}, color = {0, 0, 127}));
+      Line(points = {{-55, 57}, {-55, 72}, {-66, 72}}, color = {0, 0, 127}));
   connect(brake.u3, acceleration.y) annotation(
-      Line(points = {{-54, 48}, {-73, 48}, {-73, 35}}, color = {0, 0, 127}));
+      Line(points = {{-55, 47}, {-55, 41}, {-59, 41}, {-59, 35}, {-73, 35}}, color = {0, 0, 127}));
   connect(stop.u1, zero.y) annotation(
       Line(points = {{-30, 48}, {-38, 47}, {-37, 29}}, color = {0, 0, 127}));
   connect(stop.u3, brake.y) annotation(
-      Line(points = {{-30, 40}, {-40, 40}, {-40, 52}}, color = {0, 0, 127}));
+      Line(points = {{-30, 40}, {-30, 52}, {-41, 52}}, color = {0, 0, 127}));
     annotation(
       Diagram);end MotorAceleracao;
   model Motor
     Real Error = 0.000001;
     Modelica.Blocks.Interfaces.RealInput destino annotation(
-      Placement(transformation(origin = {-120, 2}, extent = {{-20, -20}, {20, 20}}), transformation(origin = {-120, 28}, extent = {{-20, -20}, {20, 20}})));
+      Placement(transformation(origin = {-120, 22}, extent = {{-20, -20}, {20, 20}}), transformation(origin = {-120, 28}, extent = {{-20, -20}, {20, 20}})));
     Modelica.Blocks.Math.Add velocity(k2 = -1) annotation(
       Placement(transformation(origin = {-60, -22}, extent = {{-10, -10}, {10, 10}})));
     Modelica.Blocks.Interfaces.RealInput origem annotation(
@@ -86,16 +86,9 @@ model Impressora2D
       Placement(transformation(origin = {54, -10}, extent = {{-10, -10}, {10, 10}})));
     Modelica.Blocks.Interfaces.RealOutput crt_position annotation(
       Placement(transformation(origin = {110, -10}, extent = {{-10, -10}, {10, 10}}), transformation(origin = {110, 2}, extent = {{-10, -10}, {10, 10}})));
-
-    model velCalculator
-      Modelica.Blocks.Interfaces.RealInput dist annotation(
-        Placement(transformation(origin = {-112, -2}, extent = {{-10, -10}, {10, 10}}), transformation(origin = {-114, 2}, extent = {{-20, -20}, {20, 20}})));
-    equation
-
-    end velCalculator;
   equation
     connect(velocity.u1, destino) annotation(
-      Line(points = {{-72, -16}, {-93, -16}, {-93, 2}, {-120, 2}}, color = {0, 0, 127}));
+      Line(points = {{-72, -16}, {-93, -16}, {-93, 22}, {-120, 22}}, color = {0, 0, 127}));
     connect(velocity.u2, origem) annotation(
       Line(points = {{-72, -28}, {-96, -28}, {-96, -26}, {-120, -26}}, color = {0, 0, 127}));
     connect(velocity_switch.u1, zero.y) annotation(
@@ -117,26 +110,26 @@ model Impressora2D
   end Motor;
 
   Modelica.Blocks.Sources.RealExpression origemX(y = 3) annotation(
-    Placement(transformation(origin = {-88, 50}, extent = {{-10, -10}, {10, 10}})));
+    Placement(transformation(origin = {-88, 26}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Blocks.Sources.RealExpression destinoX(y = 12) annotation(
-    Placement(transformation(origin = {-88, 30}, extent = {{-10, -10}, {10, 10}})));
+    Placement(transformation(origin = {-88, 44}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Blocks.Sources.RealExpression origemY(y = 5) annotation(
-    Placement(transformation(origin = {-86, 6}, extent = {{-10, -10}, {10, 10}})));
+    Placement(transformation(origin = {-84, -14}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Blocks.Sources.RealExpression destinoY(y = 2) annotation(
-    Placement(transformation(origin = {-86, -12}, extent = {{-10, -10}, {10, 10}})));
-  Impressora2D.MotorAceleracao motorAceleracaox annotation(
-    Placement(transformation(origin = {-34, 34}, extent = {{-10, -10}, {10, 10}})));
-  Impressora2D.MotorAceleracao motorAceleracaoy annotation(
-    Placement(transformation(origin = {-32, 0}, extent = {{-10, -10}, {10, 10}})));
+    Placement(transformation(origin = {-84, 2}, extent = {{-10, -10}, {10, 10}})));
+  Impressora2D.Motor motorX annotation(
+    Placement(transformation(origin = {-26, 38}, extent = {{-10, -10}, {10, 10}})));
+  Impressora2D.Motor motorY annotation(
+    Placement(transformation(origin = {-26, -4}, extent = {{-10, -10}, {10, 10}})));
 equation
-  connect(motorAceleracaox.orig, origemX.y) annotation(
-    Line(points = {{-46, 40}, {-76, 40}, {-76, 50}}, color = {0, 0, 127}));
-  connect(motorAceleracaox.dest, destinoX.y) annotation(
-    Line(points = {{-46, 30}, {-76, 30}}, color = {0, 0, 127}));
-  connect(motorAceleracaoy.orig, origemY.y) annotation(
-    Line(points = {{-44, 6}, {-74, 6}}, color = {0, 0, 127}));
-  connect(motorAceleracaoy.dest, destinoY.y) annotation(
-    Line(points = {{-44, -4}, {-74, -4}, {-74, -12}}, color = {0, 0, 127}));
+  connect(motorX.destino, destinoX.y) annotation(
+    Line(points = {{-38, 40}, {-76, 40}, {-76, 44}}, color = {0, 0, 127}));
+  connect(motorX.origem, origemX.y) annotation(
+    Line(points = {{-38, 36}, {-76, 36}, {-76, 26}}, color = {0, 0, 127}));
+  connect(motorY.destino, destinoY.y) annotation(
+    Line(points = {{-38, -2}, {-72, -2}, {-72, 2}}, color = {0, 0, 127}));
+  connect(motorY.origem, origemY.y) annotation(
+    Line(points = {{-38, -6}, {-72, -6}, {-72, -14}}, color = {0, 0, 127}));
   annotation(
     uses(Modelica(version = "4.0.0")));
 end Impressora2D;
