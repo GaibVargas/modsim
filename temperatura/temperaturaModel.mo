@@ -19,7 +19,7 @@ model temperaturaModel
   Modelica.Blocks.Sources.BooleanExpression booleanExpression1(y = T > 35) annotation(
     Placement(visible = true, transformation(origin = {-28, -101}, extent = {{-18, -9}, {18, 9}}, rotation = 0)));
   inner Modelica.StateGraph.StateGraphRoot stateGraphRoot annotation(
-    Placement(visible = true, transformation(origin = {94, -24}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-104, -6}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.StateGraph.InitialStep ligado(nOut = 1, nIn = 1)  annotation(
     Placement(visible = true, transformation(origin = {-56, -76}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
