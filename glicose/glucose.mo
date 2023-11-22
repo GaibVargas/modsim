@@ -17,7 +17,7 @@ model glucose
   Modelica.Blocks.Sources.RealExpression realExpression1(y = vin - k1*G*ATP)  annotation(
     Placement(visible = true, transformation(origin = {-1, 38}, extent = {{-31, -8}, {31, 8}}, rotation = 0)));
   inner Modelica.StateGraph.StateGraphRoot stateGraphRoot annotation(
-    Placement(visible = true, transformation(origin = {-70, 6}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-164, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.StateGraph.InitialStepWithSignal initialStepWithSignal(nOut = 1)  annotation(
     Placement(visible = true, transformation(origin = {-130, -28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.StateGraph.StepWithSignal stepWithSignal(nIn = 1, nOut = 1)  annotation(
@@ -69,12 +69,13 @@ equation
   connect(timer.y, greaterThreshold.u) annotation(
     Line(points = {{23, -62}, {34, -62}}, color = {0, 0, 127}));
   connect(stepWithSignal.active, timer.u) annotation(
-    Line(points = {{-10, -38}, {-8, -38}, {-8, -62}, {0, -62}}, color = {255, 0, 255}));
+    Line(points = {{-10, -38}, {-10, -63}, {0, -63}, {0, -62}}, color = {255, 0, 255}));
   connect(transitionWithSignal1.condition, greaterThreshold.y) annotation(
     Line(points = {{70, -40}, {70, -62}, {57, -62}}, color = {255, 0, 255}));
   annotation(
     uses(Modelica(version = "4.0.0")),
   Diagram(coordinateSystem(extent = {{-200, -200}, {200, 200}})),
   Icon(coordinateSystem(extent = {{-200, -200}, {200, 200}})),
-  version = "");
+  version = "",
+  experiment(StartTime = 0, StopTime = 800, Tolerance = 1e-6, Interval = 1.6));
 end glucose;
